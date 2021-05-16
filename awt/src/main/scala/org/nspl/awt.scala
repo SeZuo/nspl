@@ -55,11 +55,11 @@ private[nspl] case class JavaRC(graphics: Graphics2D)
 
 object awtrenderer extends JavaAWTUtil {
 
-  implicit val defaultGlyphMeasurer = AwtGlyphMeasurer
+  implicit val defaultGlyphMeasurer: GlyphMeasurer[Font] = AwtGlyphMeasurer
 
   implicit val defaultAWTFont: FontConfiguration = font("Arial")
 
-  implicit val shapeRenderer = new Renderer[ShapeElem, JavaRC] {
+  implicit val shapeRenderer : Renderer[ShapeElem, JavaRC]= new Renderer[ShapeElem, JavaRC] {
 
     private def drawAndFill(ctx: JavaRC, elem: ShapeElem) = {
 

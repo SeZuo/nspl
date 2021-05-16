@@ -25,7 +25,7 @@ inThisBuild(
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.13.8",
-  crossScalaVersions := Seq("2.12.15", "2.13.8"),
+  crossScalaVersions := Seq("2.12.15", "2.13.8", "3.1.1"),
   javacOptions ++= Seq("-Xdoclint:none"),
   scalacOptions ++= Seq(
     "-language:postfixOps",

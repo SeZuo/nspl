@@ -18,7 +18,7 @@ object ElemList {
     R
   ]](implicit
       r: Renderer[T, R]
-  ) =
+  ) : Renderer[ElemList[T], R] =
     new Renderer[ElemList[T], R] {
       def render(ctx: R, elem: ElemList[T]): Unit = {
         ctx.withTransform(elem.tx) {
@@ -47,7 +47,7 @@ object ElemList2 {
   ], R <: RenderingContext[R]](implicit
       r1: Renderer[T, R],
       r2: Renderer[T2, R]
-  ) =
+  ): Renderer[ElemList2[T, T2], R] =
     new Renderer[ElemList2[T, T2], R] {
       def render(ctx: R, elem: ElemList2[T, T2]): Unit = {
         ctx.withTransform(elem.tx) {

@@ -103,7 +103,8 @@ case class AxisSettings(
     }
 
     val numTicks1 =
-      if (tickSpace.isEmpty) numTicks else (axis.max - axis.min) / tickSpace1
+      if (tickSpace.isEmpty) numTicks.toDouble
+      else (axis.max - axis.min) / tickSpace1
 
     val lineStart = lineStartFraction * axis.width
     val lineEnd = lineStart + axis.width * lineLengthFraction
