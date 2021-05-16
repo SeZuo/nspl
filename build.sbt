@@ -118,6 +118,7 @@ lazy val scalatagsJvm = project
   .in(file("scalatags-jvm"))
   .settings(commonSettings)
   .settings(
+    crossScalaVersions := Seq("2.12.13", "2.13.5"),
     name := "nspl-scalatags-jvm",
     libraryDependencies += "com.lihaoyi" %% "scalatags" % "0.11.0"
   )
@@ -126,6 +127,7 @@ lazy val scalatagsJvm = project
 lazy val saddle = (project in file("saddle"))
   .settings(commonSettings)
   .settings(
+    crossScalaVersions := Seq("2.12.13", "2.13.5"),
     name := "nspl-saddle",
     libraryDependencies ++= Seq(
       "io.github.pityka" %% "saddle-core" % "3.0.2",
@@ -137,6 +139,7 @@ lazy val saddle = (project in file("saddle"))
 lazy val saddleJS = (project in file("saddle"))
   .settings(commonSettings)
   .settings(
+    crossScalaVersions := Seq("2.12.13", "2.13.5"),
     name := "nspl-saddle-js",
     target := file("saddle/targetJS"),
     libraryDependencies ++= Seq(
