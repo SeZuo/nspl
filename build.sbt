@@ -85,6 +85,7 @@ lazy val scalatagsJs = project
   .in(file("scalatags-js"))
   .settings(commonSettings)
   .settings(
+    crossScalaVersions := Seq("2.12.13", "2.13.6"),
     name := "nspl-scalatags-js",
     libraryDependencies ++= Seq(
       ("org.scala-js") %%% "scalajs-dom" % "2.1.0",
@@ -118,7 +119,7 @@ lazy val scalatagsJvm = project
   .in(file("scalatags-jvm"))
   .settings(commonSettings)
   .settings(
-    crossScalaVersions := Seq("2.12.13", "2.13.5"),
+    crossScalaVersions := Seq("2.12.13", "2.13.6"),
     name := "nspl-scalatags-jvm",
     libraryDependencies += "com.lihaoyi" %% "scalatags" % "0.11.0"
   )
@@ -127,10 +128,9 @@ lazy val scalatagsJvm = project
 lazy val saddle = (project in file("saddle"))
   .settings(commonSettings)
   .settings(
-    crossScalaVersions := Seq("2.12.13", "2.13.5"),
     name := "nspl-saddle",
     libraryDependencies ++= Seq(
-      "io.github.pityka" %% "saddle-core" % "3.0.2",
+      "io.github.pityka" %% "saddle-core" % "3.1.0+24-b1e8dd43-SNAPSHOT",
       "org.scalameta" %% "munit" % "1.0.0-M1" % Test
     )
   )
@@ -139,11 +139,10 @@ lazy val saddle = (project in file("saddle"))
 lazy val saddleJS = (project in file("saddle"))
   .settings(commonSettings)
   .settings(
-    crossScalaVersions := Seq("2.12.13", "2.13.5"),
     name := "nspl-saddle-js",
     target := file("saddle/targetJS"),
     libraryDependencies ++= Seq(
-      "io.github.pityka" %%% "saddle-core" % "3.0.2"
+      "io.github.pityka" %%% "saddle-core" % "3.1.0+24-b1e8dd43-SNAPSHOT"
     )
   )
   .dependsOn(coreJS)

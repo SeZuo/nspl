@@ -139,11 +139,15 @@ private[nspl] case class CanvasRC(
 
 object canvasrenderer {
 
-  implicit val defaultGlyphMeasurer = CanvasGlyphMeasurer
+  implicit val defaultGlyphMeasurer: GlyphMeasurer[Font] = CanvasGlyphMeasurer
 
   implicit val defaultFont: FontConfiguration = font("Arial")
 
+<<<<<<< HEAD
   private[nspl] def rec2bounds(r: DOMRect) =
+=======
+  implicit def rec2bounds(r: ClientRect): org.nspl.Bounds =
+>>>>>>> wip, fails to compile
     Bounds(r.left, r.top, r.width, r.height)
 
   private[nspl] def cssColor(c: Color) = s"rgba(${c.r},${c.g},${c.b},${c.a}"
@@ -417,6 +421,7 @@ object canvasrenderer {
 
             ctx.withDash(elem.stroke.get.dash) {
 
+<<<<<<< HEAD
               if (ctx.graphics.lineWidth != elem.stroke.get.width) {
                 ctx.graphics.lineWidth = elem.stroke.get.width
               }
@@ -425,6 +430,18 @@ object canvasrenderer {
             }
           }
         }
+=======
+  implicit val shapeRenderer: CER[ShapeElem] = new CER[ShapeElem] {
+    def render(ctx: CanvasRC, elem: ShapeElem): Unit = {
+      if (elem.fill.a > 0.0) {
+        ctx.graphics.fillStyle = elem.fill.css
+        fill(elem.shape, ctx.graphics)
+      }
+      if (elem.stroke.isDefined && elem.strokeColor.a > 0) {
+        ctx.graphics.lineWidth = elem.stroke.get.width * 0.4
+        ctx.graphics.strokeStyle = elem.strokeColor.css
+        draw(elem.shape, ctx.graphics)
+>>>>>>> wip, fails to compile
       }
     }
 
@@ -446,9 +463,13 @@ object canvasrenderer {
     }
   }
 
+<<<<<<< HEAD
   def asCss(c: Color) = s"rgba(${c.r},${c.g},${c.b}, ${c.a})"
 
   implicit val textRenderer = new Renderer[TextBox, CanvasRC] {
+=======
+  implicit val textRenderer: CER[TextBox] = new CER[TextBox] {
+>>>>>>> wip, fails to compile
 
     def render(ctx: CanvasRC, elem: TextBox): Unit = {
       ctx.withTransform(elem.txLoc) {
