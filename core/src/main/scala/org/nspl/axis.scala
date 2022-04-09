@@ -198,7 +198,7 @@ case class AxisSettings(
                 (b: Bounds) =>
                   AffineTransform.rotate(labelRotation, b.x, b.centerY)
               ),
-              (b: Bounds) =>
+              (_: Bounds) =>
                 AffineTransform.translate(0, tickLabelDistance.value)
             ),
             (b: Bounds) =>
@@ -281,7 +281,6 @@ case class AxisSettings(
               val rightWorld = group(2).fold(identity, _._1)
               val (world, tick) = group(1).toOption.get
               val leftV = axis.worldToView(leftWorld)
-              val centerV = axis.worldToView(centerWorld)
               val rightV = axis.worldToView(rightWorld)
               val availableSpace = (rightV - leftV) * 0.5
               List((world, tick, availableSpace))

@@ -1,8 +1,7 @@
 package org.nspl
 
-sealed trait Font {
-  type F >: this.type <: Font
-  def advance(c: Char, size: Int)(implicit fm: GlyphMeasurer[F]) =
+sealed trait Font { self : Font => 
+  def advance(c: Char, size: Int)(implicit fm: GlyphMeasurer[self.type]) =
     fm.advance(c, this)
   def size: Int
 }

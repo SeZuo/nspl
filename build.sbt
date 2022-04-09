@@ -27,16 +27,35 @@ lazy val commonSettings = Seq(
   scalaVersion := "2.13.8",
   crossScalaVersions := Seq("2.12.15", "2.13.8", "3.1.1"),
   javacOptions ++= Seq("-Xdoclint:none"),
-  scalacOptions ++= Seq(
-    "-language:postfixOps",
-    "-encoding",
-    "utf8", // Option and arguments on same line
-    "-Xfatal-warnings", // New lines for each options
-    "-language:implicitConversions",
-    "-deprecation",
-    "-unchecked",
-    "-feature"
-  ),
+  scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((3, _)) =>
+      Seq(
+        "-no-indent",
+        "-old-syntax",
+        "-deprecation", // Emit warning and location for usages of deprecated APIs.
+        "-encoding",
+        "utf-8", // Specify character encoding used by source files.
+        "-feature", // Emit warning and location for usages of features that should be imported explicitly.
+        "-language:postfixOps",
+        "-language:existentials",
+        "-language:implicitConversions",
+        "-unchecked", // Enable additional warnings where generated code depends on assumptions.
+        "-Xfatal-warnings" // Fail the compilation if there are any warnings.
+      )
+    case Some((2, _)) =>
+      Seq(
+        "-deprecation", // Emit warning and location for usages of deprecated APIs.
+        "-encoding",
+        "utf-8", // Specify character encoding used by source files.
+        "-feature", // Emit warning and location for usages of features that should be imported explicitly.
+        "-language:postfixOps",
+        "-language:implicitConversions",
+        "-unchecked", // Enable additional warnings where generated code depends on assumptions.
+        "-Xfatal-warnings", // Fail the compilation if there are any warnings.
+        
+      )
+    case _ => ???
+  }),
   licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
   fork := false
 )
@@ -85,10 +104,8 @@ lazy val scalatagsJs = project
   .in(file("scalatags-js"))
   .settings(commonSettings)
   .settings(
-    crossScalaVersions := Seq("2.12.13", "2.13.6"),
     name := "nspl-scalatags-js",
     libraryDependencies ++= Seq(
-      ("org.scala-js") %%% "scalajs-dom" % "2.1.0",
       ("com.lihaoyi") %%% "scalatags" % "0.11.0"
     )
   )
@@ -119,7 +136,6 @@ lazy val scalatagsJvm = project
   .in(file("scalatags-jvm"))
   .settings(commonSettings)
   .settings(
-    crossScalaVersions := Seq("2.12.13", "2.13.6"),
     name := "nspl-scalatags-jvm",
     libraryDependencies += "com.lihaoyi" %% "scalatags" % "0.11.0"
   )
@@ -131,7 +147,7 @@ lazy val saddle = (project in file("saddle"))
     name := "nspl-saddle",
     libraryDependencies ++= Seq(
       "io.github.pityka" %% "saddle-core" % "3.1.0+24-b1e8dd43-SNAPSHOT",
-      "org.scalameta" %% "munit" % "1.0.0-M1" % Test
+      "org.scalameta" %% "munit" % "1.0.0-M3" % Test
     )
   )
   .dependsOn(core, awt, scalatagsJvm)
@@ -197,7 +213,7 @@ lazy val docs = project
 
 lazy val root = (project in file("."))
   .settings(commonSettings: _*)
-  .settings(crossScalaVersions := Nil,  publish / skip := true)
+  .settings( publish / skip := true)
   .aggregate(
     saddle,
     saddleJS,

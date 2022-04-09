@@ -46,7 +46,7 @@ trait JavaAWTUtil {
   private[nspl] def col2col(c: Color): java.awt.Paint =
     new java.awt.Color(c.r, c.g, c.b, c.a)
 
-  private[nspl] def str2str(s: Stroke): : java.awt.BasicStroke =
+  private[nspl] def str2str(s: Stroke): java.awt.BasicStroke =
     new java.awt.BasicStroke(
       s.width.toFloat,
       s.cap match {

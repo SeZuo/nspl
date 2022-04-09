@@ -74,7 +74,7 @@ case class ElemOption[A <: Renderable[A]](option: Option[A])
 object ElemOption {
   implicit def renderer[T1 <: Renderable[T1], R <: RenderingContext[R]](implicit
       r1: Renderer[T1, R]
-  ) = new Renderer[ElemOption[T1], R] {
+  ): Renderer[ElemOption[T1], R] = new Renderer[ElemOption[T1], R] {
     def render(ctx: R, elem: ElemOption[T1]): Unit =
       elem.option.fold(())(r1.render(ctx, _))
   }
@@ -93,7 +93,7 @@ object ElemEither {
   ], R <: RenderingContext[R]](implicit
       r1: Renderer[T1, R],
       r2: Renderer[T2, R]
-  ) = new Renderer[ElemEither[T1, T2], R] {
+  ) : Renderer[ElemEither[T1, T2], R]= new Renderer[ElemEither[T1, T2], R] {
     def render(ctx: R, elem: ElemEither[T1, T2]): Unit =
       ctx.withTransform(elem.tx) {
         elem.either.fold(

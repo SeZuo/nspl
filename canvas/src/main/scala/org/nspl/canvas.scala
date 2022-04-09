@@ -143,11 +143,7 @@ object canvasrenderer {
 
   implicit val defaultFont: FontConfiguration = font("Arial")
 
-<<<<<<< HEAD
-  private[nspl] def rec2bounds(r: DOMRect) =
-=======
-  implicit def rec2bounds(r: ClientRect): org.nspl.Bounds =
->>>>>>> wip, fails to compile
+  private[nspl] def rec2bounds(r: DOMRect) : org.nspl.Bounds =
     Bounds(r.left, r.top, r.width, r.height)
 
   private[nspl] def cssColor(c: Color) = s"rgba(${c.r},${c.g},${c.b},${c.a}"
@@ -193,9 +189,9 @@ object canvasrenderer {
     def paintBounds = {
       val aspect = paintableElem.bounds.h / paintableElem.bounds.w
 
-      val paintWidth = if (aspect > 1) canvas.height / aspect else canvas.width
+      val paintWidth = if (aspect > 1) (canvas.height / aspect).toInt else canvas.width
       val paintHeight =
-        if (aspect <= 1) canvas.width * aspect else canvas.height
+        if (aspect <= 1) (canvas.width * aspect).toInt else canvas.height
       Bounds(0, 0, paintWidth, paintHeight)
     }
 
@@ -400,7 +396,7 @@ object canvasrenderer {
     }
   }
 
-  implicit val shapeRenderer = new Renderer[ShapeElem, CanvasRC] {
+  implicit val shapeRenderer: Renderer[ShapeElem, CanvasRC] = new Renderer[ShapeElem, CanvasRC] {
 
     private def drawAndFill(ctx: CanvasRC, elem: ShapeElem) = {
 
@@ -421,7 +417,6 @@ object canvasrenderer {
 
             ctx.withDash(elem.stroke.get.dash) {
 
-<<<<<<< HEAD
               if (ctx.graphics.lineWidth != elem.stroke.get.width) {
                 ctx.graphics.lineWidth = elem.stroke.get.width
               }
@@ -430,18 +425,6 @@ object canvasrenderer {
             }
           }
         }
-=======
-  implicit val shapeRenderer: CER[ShapeElem] = new CER[ShapeElem] {
-    def render(ctx: CanvasRC, elem: ShapeElem): Unit = {
-      if (elem.fill.a > 0.0) {
-        ctx.graphics.fillStyle = elem.fill.css
-        fill(elem.shape, ctx.graphics)
-      }
-      if (elem.stroke.isDefined && elem.strokeColor.a > 0) {
-        ctx.graphics.lineWidth = elem.stroke.get.width * 0.4
-        ctx.graphics.strokeStyle = elem.strokeColor.css
-        draw(elem.shape, ctx.graphics)
->>>>>>> wip, fails to compile
       }
     }
 
@@ -463,13 +446,9 @@ object canvasrenderer {
     }
   }
 
-<<<<<<< HEAD
   def asCss(c: Color) = s"rgba(${c.r},${c.g},${c.b}, ${c.a})"
 
-  implicit val textRenderer = new Renderer[TextBox, CanvasRC] {
-=======
-  implicit val textRenderer: CER[TextBox] = new CER[TextBox] {
->>>>>>> wip, fails to compile
+  implicit val textRenderer : Renderer[TextBox, CanvasRC] = new Renderer[TextBox, CanvasRC] {
 
     def render(ctx: CanvasRC, elem: TextBox): Unit = {
       ctx.withTransform(elem.txLoc) {

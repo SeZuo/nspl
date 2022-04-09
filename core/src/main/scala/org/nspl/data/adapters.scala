@@ -113,7 +113,7 @@ trait DataAdaptors extends DataTuples {
       def dimension = s.headOption.map(v => f(v).dimension).getOrElse(0)
       def columnMinMax(i: Int) =
         if (s.isEmpty) None
-        else Some(MinMaxImpl(s.map(_.apply(i)).min, s.map(_.apply(i)).max))
+        else Some(MinMaxImpl(s.map(t => f(t).apply(i)).min, s.map(t => f(t).apply(i)).max))
       def quantilesOfColumn(i: Int, qs: Vector[Double]) = {
         val v = s.map(v => f(v).apply(i))
         percentile(v, qs).toVector
